@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chatbot - Emotional Care</title>
+<style>
+    body {
+        background: #0a0a1a;
+        color: #00f0ff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+    }
+    h1 {
+        text-shadow: 0 0 10px #00f0ff;
+    }
+    #chat-container {
+        max-width: 400px;
+        margin: auto;
+        background: rgba(0,0,30,0.9);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px #00f0ff;
+    }
+    #chat-box {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #00f0ff55;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    #chat-input {
+        width: 70%;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        background: #001f33;
+        color: #fff;
+    }
+    #send-btn {
+        width: 25%;
+        padding: 8px;
+        background: #00f0ff;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    #send-btn:hover {
+        background: #00c0d0;
+    }
+    .user { color: #fff; margin-bottom: 5px; }
+    .bot { color: #00f0ff; margin-bottom: 10px; }
+    .back-btn {
+        margin-top: 15px;
+        background: none;
+        border: 1px solid #00f0ff;
+        padding: 8px;
+        color: #00f0ff;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .back-btn:hover {
+        background: #00f0ff;
+        color: black;
+    }
+</style>
+</head>
+<body>
+
+<h1>Emotional Care - Chatbot</h1>
+
+<div id="chat-container">
+    <div id="chat-box"></div>
+    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+    <button id="send-btn">Enviar</button>
+</div>
+
+<button class="back-btn" onclick="VoltarInicio()">⬅ Voltar ao Início</button>
+
+<script>
+let nomeUsuario = localStorage.getItem("nomeUsuario") || "amigo";
+
+const chatBox = document.getElementById("chat-box");
+const chatInput = document.getElementById("chat-input");
+const sendBtn = document.getElementById("send-btn");
+
+const respostas = {
+    "estou triste": `Sinto muito que esteja assim, ${nomeUsuario}. 💙 Momentos ruins passam, e você é mais forte do que imagina.`,
+    "estou feliz": `Que ótimo, ${nomeUsuario}! 😄 Continue espalhando essa energia boa!`,
+    "estou com raiva": `Respire fundo, ${nomeUsuario}... Inspire... Expire... Vamos tentar encontrar calma juntos.`,
+    "oi": `Olá, ${nomeUsuario}! Como você está se sentindo hoje?`,
+    "tchau": `Até logo, ${nomeUsuario}! Estarei aqui quando precisar 💙`,
+    "ola": `Olá, ${nomeUsuario}! Como você está se sentindo hoje?`  
+};
+
+sendBtn.addEventListener("click", enviarMensagem);
+chatInput.addEventListener("keypress", function(e){
+    if(e.key === "Enter") enviarMensagem();
+});
+
+function enviarMensagem() {
+    let mensagem = chatInput.value.trim().toLowerCase();
+    if(mensagem){
+        chatBox.innerHTML += `<div class="user"><b>Você:</b> ${mensagem}</div>`;
+        if(respostas[mensagem]){
+            chatBox.innerHTML += `<div class="bot"><b>Bot:</b> ${respostas[mensagem]}</div>`;
+        } else {
+            chatBox.innerHTML += `<div class="bot"><b>Bot:</b> Não entendi muito bem, ${nomeUsuario}, mas estou aqui para te ouvir 💙</div>`;
+        }
+        chatBox.scrollTop = chatBox.scrollHeight;
+        chatInput.value = "";
+    }
+}
+
+function VoltarInicio(){
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
