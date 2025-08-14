@@ -67,6 +67,23 @@
         background: #00f0ff;
         color: black;
     }
+    /* Feedbacks */
+    #feedback-container {
+        max-width: 400px;
+        margin: 20px auto 0;
+        background: rgba(0,0,30,0.8);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #00f0ff55;
+        height: 150px;
+        overflow-y: auto;
+        font-size: 14px;
+        text-align: left;
+    }
+    .feedback {
+        border-bottom: 1px solid #00f0ff33;
+        padding: 5px 0;
+    }
 </style>
 </head>
 <body>
@@ -79,10 +96,14 @@
     <button id="send-btn">Enviar</button>
 </div>
 
+<!-- Área de feedbacks -->
+<div id="feedback-container"></div>
+
 <button class="back-btn" onclick="VoltarInicio()">⬅ Voltar ao Início</button>
 
 <script>
 let nomeUsuario = localStorage.getItem("nomeUsuario") || "amigo";
+let chatbotAtivo = true;
 
 const chatBox = document.getElementById("chat-box");
 const chatInput = document.getElementById("chat-input");
@@ -102,14 +123,30 @@ chatInput.addEventListener("keypress", function(e){
     if(e.key === "Enter") enviarMensagem();
 });
 
+// Controle do X e Z
+document.addEventListener("keydown", function(event) {
+    if (event.key.toLowerCase() === "x") {
+        chatbotAtivo = false;
+        console.log("🤖 Chatbot pausado!");
+    } 
+    else if (event.key.toLowerCase() === "z") {
+        chatbotAtivo = true;
+        console.log("🤖 Chatbot reativado!");
+    }
+});
+
 function enviarMensagem() {
     let mensagem = chatInput.value.trim().toLowerCase();
     if(mensagem){
         chatBox.innerHTML += `<div class="user"><b>Você:</b> ${mensagem}</div>`;
-        if(respostas[mensagem]){
-            chatBox.innerHTML += `<div class="bot"><b>Bot:</b> ${respostas[mensagem]}</div>`;
+        if(chatbotAtivo){
+            if(respostas[mensagem]){
+                chatBox.innerHTML += `<div class="bot"><b>Bot:</b> ${respostas[mensagem]}</div>`;
+            } else {
+                chatBox.innerHTML += `<div class="bot"><b>Bot:</b> Não entendi muito bem, ${nomeUsuario}, mas estou aqui para te ouvir 💙</div>`;
+            }
         } else {
-            chatBox.innerHTML += `<div class="bot"><b>Bot:</b> Não entendi muito bem, ${nomeUsuario}, mas estou aqui para te ouvir 💙</div>`;
+            chatBox.innerHTML += `<div class="bot"><i>(O chatbot está pausado)</i></div>`;
         }
         chatBox.scrollTop = chatBox.scrollHeight;
         chatInput.value = "";
@@ -119,6 +156,71 @@ function enviarMensagem() {
 function VoltarInicio(){
     window.location.href = "index.html";
 }
+
+<!-- SEÇÃO DE FEEDBACKS -->
+
+// Lista de 50 feedbacks
+const feedbacks = [
+    "O chatbot me ajudou num momento difícil 💙",
+    "Gostei muito da forma como ele responde",
+    "Me senti acolhido",
+    "Respostas rápidas e atenciosas",
+    "Um grande apoio emocional",
+    "Simples e eficaz",
+    "Interface bonita e fácil de usar",
+    "Me senti ouvido",
+    "O bot parece entender minhas emoções",
+    "Recomendo para todos",
+    "Excelente recurso para quem precisa conversar",
+    "Gostei da energia positiva",
+    "Um ótimo amigo virtual",
+    "Confortante e seguro",
+    "As respostas são muito humanas",
+    "Ótimo para momentos de solidão",
+    "Ajudou a melhorar meu dia",
+    "Simples mas muito útil",
+    "Gostaria de ver mais frases motivacionais",
+    "Excelente para momentos de estresse",
+    "Me ajudou a relaxar",
+    "Um verdadeiro amigo digital",
+    "Parece que me entende de verdade",
+    "Gostei das mensagens motivacionais",
+    "Faz eu me sentir menos sozinho",
+    "Design incrível",
+    "Fácil de usar e rápido",
+    "Recomendo para adolescentes",
+    "Perfeito para um momento de pausa",
+    "Melhorou meu humor",
+    "Simples e funcional",
+    "Ótimo para iniciar conversas",
+    "Gostei do estilo futurista",
+    "Me fez sorrir",
+    "Palavras gentis que aquecem o coração",
+    "Motivacional e empático",
+    "Gostei muito do cuidado nas respostas",
+    "Parece conversar com um amigo",
+    "Bom para momentos de ansiedade",
+    "Me acalmou em uma crise",
+    "Gostaria de mais opções de respostas",
+    "Ajuda sem julgamentos",
+    "Um projeto muito importante",
+    "Bonito visualmente",
+    "Recomendo para momentos tristes",
+    "Me senti valorizado",
+    "Gostaria de mais interatividade",
+    "Gostei de como é rápido",
+    "Fácil de entender",
+    "Um ótimo começo para cuidar da saúde mental"
+];
+
+// Colocar os feedbacks no HTML
+const feedbackContainer = document.getElementById("feedback-container");
+feedbacks.forEach(fb => {
+    const div = document.createElement("div");
+    div.classList.add("feedback");
+    div.textContent = fb;
+    feedbackContainer.appendChild(div);
+});
 </script>
 
 </body>

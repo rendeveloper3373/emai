@@ -49,3 +49,4 @@ function registrar() {
     window.location.href = "produto.html";
 }
 
+let nomeUsuario = localStorage.getItem("nomeUsuario") || "amigo";

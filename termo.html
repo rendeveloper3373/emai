@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termos de Uso - Emotional Care</title>
+<style>
+    body {
+        background: #0a0a1a;
+        color: #00f0ff;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 20px;
+        text-align: center;
+    }
+    h1 {
+        text-shadow: 0 0 10px #00f0ff;
+        margin-bottom: 20px;
+    }
+    a.download-link {
+        display: inline-block;
+        margin: 20px 0;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: 2px solid #00f0ff;
+        border-radius: 5px;
+        color: #00f0ff;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+    a.download-link:hover {
+        background: #00f0ff;
+        color: black;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        background: #00f0ff;
+        color: black;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        background: #00c0d0;
+    }
+</style>
+</head>
+<body>
+
+<h1>📄 Termos de Uso - Emotional Care</h1>
+
+<p>Antes de continuar para o Chatbot, leia os termos:</p>
+<a class="download-link" href="termo.pdf" download>⬇️ Baixar Termos de Uso</a>
+
+<p>Para acessar o chatbot, você precisa concordar com os termos acima.</p>
+<button id="accept-btn">✅ Concordo</button>
+
+<script>
+document.getElementById("accept-btn").addEventListener("click", function (){
+    // Redireciona para o chatbot
+    window.location.href = "./chatbot.html";
+});
+</script>
+
+</body>
+</html>

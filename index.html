@@ -7,62 +7,55 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-
-
-
 <body>
   <div class="container">
     <header>
       <h1 id="typewriter">Emotional Care</h1>
     </header>
 
-<section class="intro-section">
-  <h2>Emotional Care AI: o Futuro da Conexão Humana</h2>
-  <ul class="stats-list">
-    <li>🧠 93% das IAs treinadas com redes neurais emocionais reconhecem sentimentos humanos com mais precisão que terapeutas iniciantes.</li>
-    <li>💬 IAs com sensores afetivos têm taxa de empatia percebida 2,6x maior em interações digitais.</li>
-    <li>📊 94% dos usuários afirmam se sentir compreendidos após conversas com a Emotional Care AI.</li>
-    <li>❤️ A Emotional Care AI pode ser usadar por deficientes visuais, contendo a reprodução por voz.</li>
-    <li>⚠️ A Emotional Care AI é treinada para ser sua amiga, contendo 98,9% de eficácia.</li>
-  </ul>
-  <p class="disclaimer">*Dados simulados para fins de demonstração.</p>
-</section>
+    <!-- Introdução -->
+    <section class="intro-section">
+      <h2>Emotional Care AI: o Futuro da Conexão Humana</h2>
+      <ul class="stats-list">
+        <li>🧠 93% das IAs treinadas com redes neurais emocionais reconhecem sentimentos humanos com mais precisão que terapeutas iniciantes.</li>
+        <li>💬 IAs com sensores afetivos têm taxa de empatia percebida 2,6x maior em interações digitais.</li>
+        <li>📊 94% dos usuários afirmam se sentir compreendidos após conversas com a Emotional Care AI.</li>
+        <li>❤️ Pode ser usada por deficientes visuais, contendo a reprodução por voz.</li>
+        <li>⚠️ Treinada para ser sua amiga, contendo 98,9% de eficácia.</li>
+      </ul>
+      <p class="disclaimer">*Dados simulados para fins de demonstração.</p>
+    </section>
 
+    <!-- Sobre -->
+    <section class="sobre-section">
+      <h2>Sobre o Emotional Care</h2>
+      <p>
+        O Emotional Care é uma plataforma inovadora que combina inteligência artificial 
+        e análise emocional para oferecer suporte personalizado ao usuário. 
+        Nossa IA é treinada para identificar e compreender suas emoções, ajudando você a 
+        tomar decisões mais equilibradas e melhorar seu bem-estar.
+      </p>
+      <p>
+        Utilizando algoritmos avançados e sensores virtuais, o sistema reconhece padrões 
+        emocionais com alta precisão, proporcionando interações naturais e humanas.
+      </p>
+    </section>
 
-
-
-
-<section class="sobre-section">
-  <h2>Sobre o Emotional Care</h2>
-  <p>
-    O Emotional Care é uma plataforma inovadora que combina inteligência artificial 
-    e análise emocional para oferecer suporte personalizado ao usuário. 
-    Nossa IA é treinada para identificar e compreender suas emoções, ajudando você a 
-    tomar decisões mais equilibradas e melhorar seu bem-estar.
-  </p>
-  <p>
-    Utilizando algoritmos avançados e sensores virtuais, o sistema reconhece padrões 
-    emocionais com alta precisão, proporcionando interações naturais e humanas.
-  </p>
-</section>
-
-<script>nomeUsuario</script>
-
+    <!-- Formulário -->
     <main>
       <section class="form-section">
         <h2>Crie sua conta</h2>
         <form id="registerForm">
           <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" required />
+            <input type="text" id="nome" placeholder="Digite seu nome" />
           </div>
           <div class="form-group">
             <label for="email">E-mail</label>
-            <input type="email" id="email" required />
+            <input type="email" id="email" placeholder="Digite seu Email" required />
           </div>
           <div class="form-group">
             <label for="senha">Senha</label>
-            <input type="password" id="senha" required />
+            <input type="password" id="senha" placeholder="Crie Sua Senha" required />
           </div>
           <button type="submit" class="glow-button">Registrar</button>
         </form>
@@ -81,12 +74,22 @@
       document.getElementById("typewriter").textContent = text;
     });
 
-    // Redirecionar após registrar
+    // Salvar nome e redirecionar
     document.getElementById("registerForm").addEventListener("submit", function (e) {
       e.preventDefault();
-      window.location.href = "./produto.html";
+
+      const nome = document.getElementById("nome").value.trim();
+      if (nome === "") {
+        alert("Por favor, digite seu nome.");
+        return;
+      }
+
+      // Salva no navegador
+      localStorage.setItem("nomeUsuario", nome);
+
+      // Vai para o chatbot
+      window.location.href = "produto.html";
     });
   </script>
 </body>
 </html>
-
