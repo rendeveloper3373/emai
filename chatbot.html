@@ -31,27 +31,6 @@
         margin-bottom: 10px;
         text-align: left;
     }
-    #chat-input {
-        width: 70%;
-        padding: 8px;
-        border: none;
-        border-radius: 5px;
-        background: #001f33;
-        color: #fff;
-    }
-    #send-btn {
-        width: 25%;
-        padding: 8px;
-        background: #00f0ff;
-        color: black;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    #send-btn:hover {
-        background: #00c0d0;
-    }
     .user { color: #fff; margin-bottom: 5px; }
     .bot { color: #00f0ff; margin-bottom: 10px; }
     .back-btn {
@@ -92,8 +71,6 @@
 
 <div id="chat-container">
     <div id="chat-box"></div>
-    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
-    <button id="send-btn">Enviar</button>
 </div>
 
 <!-- Área de feedbacks -->
@@ -106,58 +83,58 @@ let nomeUsuario = localStorage.getItem("nomeUsuario") || "amigo";
 let chatbotAtivo = true;
 
 const chatBox = document.getElementById("chat-box");
-const chatInput = document.getElementById("chat-input");
-const sendBtn = document.getElementById("send-btn");
 
+// Respostas fixas para emoções
 const respostas = {
-    "estou triste": `Sinto muito que esteja assim, ${nomeUsuario}. 💙 Momentos ruins passam, e você é mais forte do que imagina.`,
-    "estou feliz": `Que ótimo, ${nomeUsuario}! 😄 Continue espalhando essa energia boa!`,
-    "estou com raiva": `Respire fundo, ${nomeUsuario}... Inspire... Expire... Vamos tentar encontrar calma juntos.`,
-    "oi": `Olá, ${nomeUsuario}! Como você está se sentindo hoje?`,
-    "tchau": `Até logo, ${nomeUsuario}! Estarei aqui quando precisar 💙`,
-    "ola": `Olá, ${nomeUsuario}! Como você está se sentindo hoje?` , 
-    "bom dia": `Olá, ${nomeUsuario}! Que bom te ver aqui, gostaria de conversar?`,
-    "sim": `Então, ${nomeUsuario} Como você está se sentindo hoje?`,
-    "bem": `Que ótimo ${nomeUsuario}! Espero que continue assim`,
-     "estou frustrado": `Sinto muito que esteja assim, ${nomeUsuario}! Para tentar melhorar, tente uma caminhada `,
-    "estou ansioso": `SInto muito que se sinta assim ${nomeUsuario}! Tente respirar fundo e manter a calma!`,
-    "me da um beijo": `sai daqui Miguel`,
-    "mal": `Espero que você melhore logo, ${nomeUsuario}! As coisas podem piorar mas logo elas passam!`
+    "triste": `Sinto muito que esteja assim, ${nomeUsuario}. 💙 Momentos ruins passam, e você é mais forte do que imagina.`,
+    "feliz": `Que ótimo, ${nomeUsuario}! 😄 Continue espalhando essa energia boa!`,
+    "raiva": `Respire fundo, ${nomeUsuario}... Inspire... Expire... Vamos tentar encontrar calma juntos.`,
+    "ansioso": `Sinto muito que se sinta assim, ${nomeUsuario}! Tente respirar fundo e manter a calma!`,
+    "mal": `Espero que você melhore logo, ${nomeUsuario}! As coisas podem piorar mas logo elas passam!`,
+    "relogio-off": `Não estou recebendo os sinais do relógio Emotional Capture, ${nomeUsuario}! Coloque novamente o relógio para ter respostas adaptadas!`,
+    "relogio-on": `Estou Captando suas emoções novamente ${nomeUsuario}!`
 };
-
-sendBtn.addEventListener("click", enviarMensagem);
-chatInput.addEventListener("keypress", function(e){
-    if(e.key === "Enter") enviarMensagem();
-});
-
-// Controle do X e Z
+// Controle do X e Z (pausar/reativar)
 document.addEventListener("keydown", function(event) {
-    if (event.key.toLowerCase() === "x") {
+    if (event.key.toLowerCase() === "c") {
         chatbotAtivo = false;
         console.log("🤖 Chatbot pausado!");
     } 
-    else if (event.key.toLowerCase() === "z") {
+    else if (event.key.toLowerCase() === "v") {
         chatbotAtivo = true;
         console.log("🤖 Chatbot reativado!");
     }
+
+    // Atalhos de emoções
+    if (chatbotAtivo) {
+        if (event.key.toLowerCase() === "r") {
+            responder("raiva");
+        }
+        else if (event.key.toLowerCase() === "t") {
+            responder("triste");
+        }
+        else if (event.key.toLowerCase() === "f") {
+            responder("feliz");
+        }
+        else if (event.key.toLowerCase() === "a") {
+            responder("ansioso");
+        }
+        else if (event.key.toLowerCase() === "m") {
+            responder("mal");
+        }
+        else if (event.key.toLowerCase() === "x") {
+            responder("relogio-off");
+        }
+        else if (event.key.toLowerCase() === "z") {
+            responder("relogio-on");
+        }
+    }
 });
 
-function enviarMensagem() {
-    let mensagem = chatInput.value.trim().toLowerCase();
-    if(mensagem){
-        chatBox.innerHTML += `<div class="user"><b>Você:</b> ${mensagem}</div>`;
-        if(chatbotAtivo){
-            if(respostas[mensagem]){
-                chatBox.innerHTML += `<div class="bot"><b>Bot:</b> ${respostas[mensagem]}</div>`;
-            } else {
-                chatBox.innerHTML += `<div class="bot"><b>Bot:</b> Não entendi muito bem, ${nomeUsuario}, mas estou aqui para te ouvir 💙</div>`;
-            }
-        } else {
-            chatBox.innerHTML += `<div class="bot"><i>(Coloque novamente o relógio Emotional Capture)</i></div>`;
-        }
-        chatBox.scrollTop = chatBox.scrollHeight;
-        chatInput.value = "";
-    }
+function responder(emocao) {
+    chatBox.innerHTML += `<div class="user"><b>Você:</b> (${emocao})</div>`;
+    chatBox.innerHTML += `<div class="bot"><b>Bot:</b> ${respostas[emocao]}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 function VoltarInicio(){
@@ -165,8 +142,6 @@ function VoltarInicio(){
 }
 
 //<!-- SEÇÃO DE FEEDBACKS -->
-
-// Lista de 50 feedbacks
 const feedbacks = [
     "O chatbot me ajudou num momento difícil 💙",
     "Gostei muito da forma como ele responde",
@@ -232,9 +207,3 @@ feedbacks.forEach(fb => {
 
 </body>
 </html>
-
-
-
-
-
-
